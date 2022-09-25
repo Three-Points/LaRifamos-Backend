@@ -1,0 +1,13 @@
+# Server
+node_modules
+.env
+
+# Docker
+docker
+
+# IDE
+.idea
+.vscode
+
+# OS
+.DS_Store

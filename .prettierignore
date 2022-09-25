@@ -1,0 +1,11 @@
+# Settings
+.github
+dist
+
+# Distribution
+project
+node_modules
+
+# IDE
+.idea
+.vscode
