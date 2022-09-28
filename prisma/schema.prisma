@@ -9,14 +9,16 @@ generator client {
 }
 
 model Product {
-  id           Int            @id @default(autoincrement())
-  name         String
-  details      String
-  marketCost   Float          @map("market_cost")
-  state        ProductState
-  createdAt    DateTime       @default(now()) @map("created_at")
-  updatedAt    DateTime       @default(now()) @map("updated_at")
-  productImage ProductImage[] @relation(name: "ProductToProductImage")
+  id         Int            @id @default(autoincrement())
+  name       String
+  details    String
+  marketCost Float          @map("market_cost")
+  state      ProductState
+  createdAt  DateTime       @default(now()) @map("created_at")
+  updatedAt  DateTime       @default(now()) @map("updated_at")
+  images     ProductImage[] @relation(name: "ProductToProductImage")
+  raffleId   Int            @map("raffle_id")
+  raffle     Raffle         @relation(name: "ProductToRaffle", fields: [raffleId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
   @@map("product")
 }
@@ -24,13 +26,49 @@ model Product {
 model ProductImage {
   id      Int
   url     String
-  product Product @relation(name: "ProductToProductImage", fields: [id], references: [id])
+  product Product @relation(name: "ProductToProductImage", fields: [id], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
   @@unique([id, url])
   @@map("product_image")
 }
 
+model Raffle {
+  id           Int            @id @default(autoincrement())
+  name         String
+  description  String
+  category     RaffleCategory
+  ticketCost   Float          @map("ticket_cost")
+  drawDate     DateTime       @map("draw_date")
+  deliveryDate DateTime       @map("delivery_date")
+  state        RaffleState
+  type         RaffleType
+  createdAt    DateTime       @default(now()) @map("created_at")
+  updatedAt    DateTime       @default(now()) @map("updated_at")
+  products     Product[]      @relation(name: "ProductToRaffle")
+
+  @@map("raffle")
+}
+
 enum ProductState {
   NEW  @map("new")
   USED @map("used")
+}
+
+enum RaffleCategory {
+  CELLPHONE @map("cellphone")
+  EVENT     @map("event")
+  TRAVEL    @map("travel")
+}
+
+enum RaffleState {
+  WAITING  @map("waiting")
+  PASSED   @map("event")
+  REJECTED @map("rejected")
+  CANCELED @map("canceled")
+  FINISHED @map("finished")
+}
+
+enum RaffleType {
+  COMMON @map("common")
+  COMBO  @map("combo")
 }

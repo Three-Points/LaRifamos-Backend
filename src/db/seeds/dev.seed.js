@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client'
 import { complete, fail } from '@utils/logger.util'
 
-import products from '@mocks/products.mock'
+import raffles from '@mocks/raffles.mock'
 
 const _prisma = new PrismaClient()
 
@@ -17,7 +17,7 @@ const _createBatch = (model, collection) =>
         })
 
 ;(async () => {
-    await _createBatch('product', products)
+    await _createBatch('raffle', raffles)
 })().finally(async () => {
     await _prisma.$disconnect()
 })

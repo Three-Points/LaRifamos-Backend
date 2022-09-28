@@ -2,14 +2,13 @@ import dayjs from 'dayjs'
 
 export default [
     {
-        id: 1,
         name: 'Dalea nana Torr. ex A. Gray',
         details: 'lobortis sapien sapien non mi integer ac neque duis bibendum',
         marketCost: 8802.44,
         state: 'USED',
         createdAt: dayjs('2022-10-01T07:30:12Z').format(),
         updatedAt: dayjs('2022-10-01T07:30:12Z').format(),
-        productImage: {
+        images: {
             create: [
                 {
                     url: 'https://dummyimage.com/945525a3-7ba3-40bc-bc0f-952dbe2e7379.png',
@@ -18,7 +17,6 @@ export default [
         },
     },
     {
-        id: 2,
         name: 'Gutierrezia californica (DC.) Torr. & A. Gray',
         details:
             'nulla tellus in sagittis dui vel nisl duis ac nibh fusce lacus purus aliquet at',
@@ -26,7 +24,7 @@ export default [
         state: 'NEW',
         createdAt: dayjs('2022-09-23T15:24:56Z').format(),
         updatedAt: dayjs('2022-09-23T15:24:56Z').format(),
-        productImage: {
+        images: {
             create: [
                 {
                     url: 'https://dummyimage.com/c65683af-03d8-4a17-9c9b-54460339de26.png',
@@ -35,7 +33,6 @@ export default [
         },
     },
     {
-        id: 3,
         name: 'Luzula arcuata (Wahlenb.) Sw. ssp. unalaschcensis (Buchenau) Hultén',
         details:
             'curabitur convallis duis consequat dui nec nisi volutpat eleifend donec ut dolor morbi vel lectus in quam',
@@ -43,7 +40,7 @@ export default [
         state: 'NEW',
         createdAt: dayjs('2022-10-14T10:38:17Z').format(),
         updatedAt: dayjs('2022-10-14T10:38:17Z').format(),
-        productImage: {
+        images: {
             create: [
                 {
                     url: 'https://dummyimage.com/5b57bf92-5988-431b-aa46-1bc770aec305.png',
@@ -61,7 +58,6 @@ export default [
         },
     },
     {
-        id: 4,
         name: 'Escobaria albicolumnaria Hester',
         details:
             'ultrices erat tortor sollicitudin mi sit amet lobortis sapien sapien non mi',
@@ -69,7 +65,7 @@ export default [
         state: 'USED',
         createdAt: dayjs('2022-09-26T22:37:33Z').format(),
         updatedAt: dayjs('2022-09-26T22:37:33Z').format(),
-        productImage: {
+        images: {
             create: [
                 {
                     url: 'https://dummyimage.com/04ba1b55-3983-4002-8dc0-ec5995ce565a.png',
@@ -87,15 +83,14 @@ export default [
         },
     },
     {
-        id: 5,
         name: 'Cladonia pachycladodes Vain.',
         details:
-            'morbi vel lectus in quam fringilla rhoncus mauris enim leo rhoncus sed vestibulum sit amet cursus id turpis integer',
+            'morbi vel lectus in quam fringilla rhoncus mauris enim leo rhoncus sed vestibulum sit amet cursus',
         marketCost: 4168.85,
         state: 'USED',
         createdAt: dayjs('2022-09-07T19:09:58Z').format(),
         updatedAt: dayjs('2022-09-07T19:09:58Z').format(),
-        productImage: {
+        images: {
             create: [
                 {
                     url: 'https://dummyimage.com/d2629705-c603-4b80-be04-62eb9f1580ed.png',
@@ -116,7 +111,6 @@ export default [
         },
     },
     {
-        id: 6,
         name: 'Musineon tenuifolium (Nutt. ex Torr. & A. Gray) J.M. Coult. & Rose',
         details:
             'pede ac diam cras pellentesque volutpat dui maecenas tristique est et tempus semper est quam pharetra magna ac consequat metus',
@@ -124,7 +118,7 @@ export default [
         state: 'NEW',
         createdAt: dayjs('2022-09-03T06:04:12Z').format(),
         updatedAt: dayjs('2022-09-03T06:04:12Z').format(),
-        productImage: {
+        images: {
             create: [
                 {
                     url: 'https://dummyimage.com/d82f52c1-9182-490b-aad6-2ded74e621ea.png',
@@ -136,7 +130,6 @@ export default [
         },
     },
     {
-        id: 7,
         name: 'Rhus virens Lindh. ex A. Gray var. choriophylla (Wooton & Standl.) L.D. Benson',
         details:
             'curae donec pharetra magna vestibulum aliquet ultrices erat tortor sollicitudin',
@@ -144,7 +137,7 @@ export default [
         state: 'USED',
         createdAt: dayjs('2022-10-14T11:02:17Z').format(),
         updatedAt: dayjs('2022-10-14T11:02:17Z').format(),
-        productImage: {
+        images: {
             create: [
                 {
                     url: 'https://dummyimage.com/a73ad20d-554f-4c16-b893-199b1be31d20.png',
@@ -153,15 +146,13 @@ export default [
         },
     },
     {
-        id: 8,
         name: 'Penstemon crandallii A. Nelson ssp. procumbens (Greene) D.D. Keck',
-        details:
-            'nascetur ridiculus mus vivamus vestibulum sagittis sapien cum sociis natoque penatibus et',
+        details: 'nascetur magna vestibulum aliquet ultrices erat tortor sol',
         marketCost: 1183.23,
         state: 'NEW',
         createdAt: dayjs('2022-09-15T05:01:17Z').format(),
         updatedAt: dayjs('2022-09-15T05:01:17Z').format(),
-        productImage: {
+        images: {
             create: [
                 {
                     url: 'https://dummyimage.com/5f10b63e-d87a-40a4-89b6-4f94ba22f81b.png',
@@ -179,7 +170,6 @@ export default [
         },
     },
     {
-        id: 9,
         name: 'Hepatica Mill.',
         details:
             'arcu adipiscing molestie hendrerit at vulputate vitae nisl aenean lectus pellentesque eget nunc donec quis orci eget orci vehicula condimentum',
@@ -187,7 +177,7 @@ export default [
         state: 'USED',
         createdAt: dayjs('2022-10-08T15:28:14Z').format(),
         updatedAt: dayjs('2022-10-08T15:28:14Z').format(),
-        productImage: {
+        images: {
             create: [
                 {
                     url: 'https://dummyimage.com/3caa6ac2-9fe9-48d3-a7c2-53507eb05787.png',
@@ -208,7 +198,6 @@ export default [
         },
     },
     {
-        id: 10,
         name: 'Melicope peduncularis (Levl.) T.G. Hartley & B.C. Stone',
         details:
             'arcu sed augue aliquam erat volutpat in congue etiam justo etiam pretium iaculis justo',
@@ -216,7 +205,7 @@ export default [
         state: 'NEW',
         createdAt: dayjs('2022-09-24T20:02:53Z').format(),
         updatedAt: dayjs('2022-09-24T20:02:53Z').format(),
-        productImage: {
+        images: {
             create: [
                 {
                     url: 'https://dummyimage.com/5d61dd9b-1e68-482c-86bf-3591aba21039.png',
