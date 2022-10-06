@@ -21,14 +21,15 @@ model Management {
   updateAt  DateTime @updatedAt @map("updated_at")
 
 
+@@map("management")
+
 }
-
-
 enum Permissions {
   OWNER @map("owner")
   ADMINISTRATOR @map("administrator")
   EDITOR @map("editor")
   ANALYZER @map("analyzer")
+}
 
 
   
