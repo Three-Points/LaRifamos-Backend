@@ -1,5 +1,5 @@
 -- CreateTable
-CREATE TABLE "Management" (
+CREATE TABLE "management" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
     "email" TEXT NOT NULL,
@@ -8,5 +8,5 @@ CREATE TABLE "Management" (
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
 
-    CONSTRAINT "Management_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "management_pkey" PRIMARY KEY ("id")
 );
