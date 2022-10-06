@@ -1,3 +1,4 @@
+import bcrypt from 'bcrypt'
 import { PrismaClient } from '@prisma/client'
 import { complete, fail } from '@utils/logger.util'
 
@@ -17,9 +18,25 @@ const _createBatch = (model, collection) =>
             fail(`${model} failed`, error.message)
         })
 
+const _createBatchAccount = (model, collection) =>
+    Promise.all(
+        collection.map(async ({ password, ...item }) => {
+            await _prisma[model].create({
+                data: {
+                    ...item,
+                    password: await bcrypt.hash(password.toString(), 10),
+                },
+            })
+        })
+    )
+        .then(() => complete(`${model} created`))
+        .catch((error) => {
+            fail(`seed failed in ${model}`, error.message)
+        })
+
 ;(async () => {
     await _createBatch('raffle', raffles)
-    await _createBatch('management', management)
+    await _createBatchAccount('management', management)
 })().finally(async () => {
     await _prisma.$disconnect()
 })
