@@ -8,6 +8,18 @@ generator client {
   provider = "prisma-client-js"
 }
 
+model Management {
+  id          Int         @id @default(autoincrement())
+  name        String
+  email       String
+  password    String
+  permissions Permissions
+  createdAt   DateTime    @default(now()) @map("created_at")
+  updateAt    DateTime    @updatedAt @map("updated_at")
+
+  @@map("management")
+}
+
 model Product {
   id         Int            @id @default(autoincrement())
   name       String
@@ -47,6 +59,13 @@ model Raffle {
   products     Product[]      @relation(name: "ProductToRaffle")
 
   @@map("raffle")
+}
+
+enum Permissions {
+  OWNER         @map("owner")
+  ADMINISTRATOR @map("administrator")
+  EDITOR        @map("editor")
+  ANALYZER      @map("analyzer")
 }
 
 enum ProductState {
