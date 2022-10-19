@@ -5,7 +5,7 @@
 
 */
 -- CreateEnum
-CREATE TYPE "RaffleState" AS ENUM ('waiting', 'event', 'rejected', 'canceled', 'finished');
+CREATE TYPE "RaffleState" AS ENUM ('waiting', 'passed', 'rejected', 'canceled', 'finished');
 
 -- AlterTable
 ALTER TABLE "raffle" ADD COLUMN     "state" "RaffleState" NOT NULL;

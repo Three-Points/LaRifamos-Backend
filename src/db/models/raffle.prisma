@@ -29,7 +29,7 @@ enum RaffleCategory {
 
 enum RaffleState {
   WAITING @map("waiting")
-  PASSED   @map("event")
+  PASSED   @map("passed")
   REJECTED @map("rejected")
   CANCELED @map("canceled")
   FINISHED @map("finished")
