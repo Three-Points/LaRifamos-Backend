@@ -12,6 +12,7 @@
         "db:seed": "babel-node ./src/db/seeds/dev.seed.js",
         "db:migrate": "npx prisma migrate dev --name",
         "db:deploy": "npx prisma migrate deploy",
+        "test": "jest",
         "format": "npx prettier --write .",
         "dev": "nodemon ./src/index --exec babel-node",
         "build": "babel ./src -d ./dist/src",
@@ -40,9 +41,11 @@
         "@commitlint/config-conventional": "17.1.0",
         "babel-plugin-module-resolver": "4.1.0",
         "husky": "8.0.1",
+        "jest": "29.2.1",
         "nodemon": "2.0.20",
         "prettier": "2.7.1",
-        "prismix": "1.0.21"
+        "prismix": "1.0.21",
+        "supertest": "6.3.0"
     },
     "repository": {
         "type": "git",
@@ -61,6 +64,40 @@
     "engines": {
         "node": ">=14.x"
     },
+    "prettier": {
+        "tabWidth": 4,
+        "semi": false,
+        "singleQuote": true
+    },
+    "babel": {
+        "presets": [
+            "@babel/preset-env"
+        ],
+        "plugins": [
+            "@babel/plugin-transform-runtime",
+            [
+                "module-resolver",
+                {
+                    "alias": {
+                        "@src": "./src",
+                        "@config": "./src/config",
+                        "@controllers": "./src/controllers",
+                        "@db": "./src/db",
+                        "@libs": "./src/libs",
+                        "@middlewares": "./src/middlewares",
+                        "@mocks": "./src/db/mocks",
+                        "@routes": "./src/routes",
+                        "@services": "./src/services",
+                        "@utils": "./src/utils",
+                        "@validators": "./src/validators"
+                    }
+                }
+            ]
+        ],
+        "ignore": [
+            "./src/db/postgreSQL"
+        ]
+    },
     "_moduleAliases": {
         "@src": "./src",
         "@config": "./src/config",
@@ -68,11 +105,31 @@
         "@db": "./src/db",
         "@libs": "./src/libs",
         "@middlewares": "./src/middlewares",
+        "@mocks": "./src/db/mocks",
         "@models": "./src/models",
         "@routes": "./src/routes",
         "@services": "./src/services",
         "@utils": "./src/utils",
         "@validators": "./src/validators"
+    },
+    "jest": {
+        "moduleNameMapper": {
+            "@src/(.*)": "<rootDir>/src/$1",
+            "@config/(.*)": "<rootDir>/src/config/$1",
+            "@controllers/(.*)": "<rootDir>/src/controllers/$1",
+            "@db/(.*)": "<rootDir>/src/db/$1",
+            "@libs/(.*)": "<rootDir>/src/libs/$1",
+            "@middlewares/(.*)": "<rootDir>/src/middlewares/$1",
+            "@mocks/(.*)": "<rootDir>/src/mocks/$1",
+            "@models/(.*)": "<rootDir>/src/db/models/$1",
+            "@routes/(.*)": "<rootDir>/src/routes/$1",
+            "@services/(.*)": "<rootDir>/src/services/$1",
+            "@utils/(.*)": "<rootDir>/src/utils/$1",
+            "@validators/(.*)": "<rootDir>/src/validators/$1"
+        },
+        "modulePathIgnorePatterns": [
+            "<rootDir>/src/db"
+        ]
     },
     "prisma": {
         "schema": "./prisma/schema.prisma",
