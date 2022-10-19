@@ -3,6 +3,9 @@ debug
 node_modules
 .env
 
+# Test
+coverage
+
 # Libraries
 scripts
 
