@@ -15,7 +15,7 @@ export default class Raffle extends Model {
      * @description
      * Returns a list of raffles and its products related.
      * @param filters Filters supported on this model.
-     * @returns An array of objects. */
+     * @returns Collection of Raffles. */
     findMany({ categories, name, state, type }) {
         return super.findMany({
             where: {
