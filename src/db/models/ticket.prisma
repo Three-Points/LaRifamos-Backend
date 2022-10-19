@@ -1,0 +1,21 @@
+model Ticket {
+    number    String   @id @default(uuid())
+    createdAt DateTime @default(now()) @map("created_at")
+    updatedAt DateTime @default(now()) @map("updated_at")
+    accountId Int
+    account   Account  @relation(name: "EnrolledRaffles", fields: [accountId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+    raffleId  Int
+    Raffle    Raffle   @relation(name: "PurchasedNumbers", fields: [raffleId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+    @@map("ticket")
+}
+
+model Account {
+    id      Int      @id @default(autoincrement())
+    tickets Ticket[] @relation("EnrolledRaffles")
+}
+
+model Raffle {
+    id      Int      @id @default(autoincrement())
+    tickets Ticket[] @relation("PurchasedNumbers")
+}
