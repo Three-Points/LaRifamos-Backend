@@ -86,7 +86,7 @@ model Ticket {
   accountId Int
   account   Account  @relation(name: "EnrolledRaffles", fields: [accountId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   raffleId  Int
-  Raffle    Raffle   @relation(name: "PurchasedNumbers", fields: [raffleId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  raffle    Raffle   @relation(name: "PurchasedNumbers", fields: [raffleId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
   @@map("ticket")
 }
