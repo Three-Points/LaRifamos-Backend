@@ -8,6 +8,41 @@ generator client {
   provider = "prisma-client-js"
 }
 
+model Account {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String
+  password  String
+  role      Role
+  liked     Raffle[] @relation(name: "LikedRaffles")
+  shared    Raffle[] @relation(name: "SharedRaffles")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @map("updated_at")
+  tickets   Ticket[] @relation(name: "EnrolledRaffles")
+
+  @@map("account")
+}
+
+model Raffle {
+  id           Int            @id @default(autoincrement())
+  likedBy      Account[]      @relation(name: "LikedRaffles")
+  sharedBy     Account[]      @relation(name: "SharedRaffles")
+  name         String
+  description  String
+  category     RaffleCategory
+  ticketCost   Float          @map("ticket_cost")
+  drawDate     DateTime       @map("draw_date")
+  deliveryDate DateTime       @map("delivery_date")
+  state        RaffleState
+  type         RaffleType
+  createdAt    DateTime       @default(now()) @map("created_at")
+  updatedAt    DateTime       @default(now()) @map("updated_at")
+  products     Product[]      @relation(name: "ProductToRaffle")
+  tickets      Ticket[]       @relation(name: "PurchasedNumbers")
+
+  @@map("raffle")
+}
+
 model Management {
   id          Int         @id @default(autoincrement())
   name        String
@@ -44,21 +79,21 @@ model ProductImage {
   @@map("product_image")
 }
 
-model Raffle {
-  id           Int            @id @default(autoincrement())
-  name         String
-  description  String
-  category     RaffleCategory
-  ticketCost   Float          @map("ticket_cost")
-  drawDate     DateTime       @map("draw_date")
-  deliveryDate DateTime       @map("delivery_date")
-  state        RaffleState
-  type         RaffleType
-  createdAt    DateTime       @default(now()) @map("created_at")
-  updatedAt    DateTime       @default(now()) @map("updated_at")
-  products     Product[]      @relation(name: "ProductToRaffle")
+model Ticket {
+  number    String   @id @default(uuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @map("updated_at")
+  accountId Int
+  account   Account  @relation(name: "EnrolledRaffles", fields: [accountId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  raffleId  Int
+  raffle    Raffle   @relation(name: "PurchasedNumbers", fields: [raffleId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
-  @@map("raffle")
+  @@map("ticket")
+}
+
+enum Role {
+  COMPANY @map("company")
+  USER    @map("user")
 }
 
 enum Permissions {
