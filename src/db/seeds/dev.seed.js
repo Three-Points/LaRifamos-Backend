@@ -2,8 +2,10 @@ import bcrypt from 'bcrypt'
 import { PrismaClient } from '@prisma/client'
 import { complete, fail } from '@utils/logger.util'
 
+import accounts from '@mocks/accounts.mock'
+import management from '@mocks/management.mock'
 import raffles from '@mocks/raffles.mock'
-import management from '@mocks//management.mock'
+import tickets from '@mocks/tickets.mock'
 
 const _prisma = new PrismaClient()
 
@@ -37,6 +39,8 @@ const _createBatchAccount = (model, collection) =>
 ;(async () => {
     await _createBatch('raffle', raffles)
     await _createBatchAccount('management', management)
+    await _createBatchAccount('account', accounts)
+    await _createBatch('ticket', tickets)
 })().finally(async () => {
     await _prisma.$disconnect()
 })
