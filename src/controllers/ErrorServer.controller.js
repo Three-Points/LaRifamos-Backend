@@ -36,8 +36,8 @@ export default class ErrorServer extends Error {
      * @constructor
      * @param {string} type Error type
      * @param {string} message Error message */
-    constructor(type, message) {
-        super(message || 'without trace')
+    constructor(type, message = 'without trace') {
+        super(message)
         this.code = this.#errors[type].code
         this.error = this.#errors[type].message
     }

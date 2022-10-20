@@ -1,14 +1,19 @@
-import Model from '@models/Model'
+import Prisma from '@libs/Prisma'
 
 /**
  * @class Raffle
  * @extends Model
  * @description Raffle model class. */
-export default class Raffle extends Model {
+export default class Raffle {
+    /**
+     * @private
+     * @description Prisma ORM definition handler library. */
+    #client
+
     /**
      * @description Generate link to Raffle model. */
     constructor() {
-        super('raffle')
+        this.#client = new Prisma('raffle')
     }
 
     /**
@@ -17,7 +22,7 @@ export default class Raffle extends Model {
      * @param filters Filters supported on this model.
      * @returns Collection of Raffles. */
     findMany({ categories, name, state, type }) {
-        return super.findMany({
+        return this.#client.findMany({
             where: {
                 ...(categories && {
                     OR: categories.map((category) => ({
