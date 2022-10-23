@@ -5,7 +5,7 @@
 
 */
 -- CreateEnum
-CREATE TYPE "ProductState" AS ENUM ('new', 'used');
+CREATE TYPE "ProductState" AS ENUM ('NEW', 'USED');
 
 -- AlterTable
-ALTER TABLE "product" ADD COLUMN     "state" "ProductState" NOT NULL;
+ALTER TABLE "product" ADD COLUMN "state" "ProductState" NOT NULL DEFAULT 'NEW';

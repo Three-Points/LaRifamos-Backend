@@ -5,7 +5,7 @@
 
 */
 -- CreateEnum
-CREATE TYPE "RaffleType" AS ENUM ('common', 'combo');
+CREATE TYPE "RaffleType" AS ENUM ('COMMON', 'COMBO');
 
 -- AlterTable
-ALTER TABLE "raffle" ADD COLUMN     "type" "RaffleType" NOT NULL;
+ALTER TABLE "raffle" ADD COLUMN "type" "RaffleType" NOT NULL DEFAULT 'COMMON';

@@ -11,9 +11,9 @@ generator client {
 model Account {
   id        Int      @id @default(autoincrement())
   name      String
-  email     String
+  email     String   @unique
   password  String
-  role      Role
+  role      Role     @default(USER)
   liked     Raffle[] @relation(name: "LikedRaffles")
   shared    Raffle[] @relation(name: "SharedRaffles")
   createdAt DateTime @default(now()) @map("created_at")
@@ -29,12 +29,12 @@ model Raffle {
   sharedBy     Account[]      @relation(name: "SharedRaffles")
   name         String
   description  String
-  category     RaffleCategory
+  category     RaffleCategory @default(UNASSIGNED)
   ticketCost   Float          @map("ticket_cost")
   drawDate     DateTime       @map("draw_date")
   deliveryDate DateTime       @map("delivery_date")
-  state        RaffleState
-  type         RaffleType
+  state        RaffleState    @default(WAITING)
+  type         RaffleType     @default(COMMON)
   createdAt    DateTime       @default(now()) @map("created_at")
   updatedAt    DateTime       @default(now()) @map("updated_at")
   products     Product[]      @relation(name: "ProductToRaffle")
@@ -48,7 +48,7 @@ model Management {
   name        String
   email       String
   password    String
-  permissions Permissions
+  permissions Permissions @default(OWNER)
   createdAt   DateTime    @default(now()) @map("created_at")
   updateAt    DateTime    @updatedAt @map("updated_at")
 
@@ -60,7 +60,7 @@ model Product {
   name       String
   details    String
   marketCost Float          @map("market_cost")
-  state      ProductState
+  state      ProductState   @default(NEW)
   createdAt  DateTime       @default(now()) @map("created_at")
   updatedAt  DateTime       @default(now()) @map("updated_at")
   images     ProductImage[] @relation(name: "ProductToProductImage")
@@ -92,37 +92,38 @@ model Ticket {
 }
 
 enum Role {
-  COMPANY @map("company")
-  USER    @map("user")
+  COMPANY
+  USER
 }
 
 enum Permissions {
-  OWNER         @map("owner")
-  ADMINISTRATOR @map("administrator")
-  EDITOR        @map("editor")
-  ANALYZER      @map("analyzer")
+  OWNER
+  ADMINISTRATOR
+  EDITOR
+  ANALYZER
 }
 
 enum ProductState {
-  NEW  @map("new")
-  USED @map("used")
+  NEW
+  USED
 }
 
 enum RaffleCategory {
-  CELLPHONE @map("cellphone")
-  EVENT     @map("event")
-  TRAVEL    @map("travel")
+  CELLPHONE
+  EVENT
+  TRAVEL
+  UNASSIGNED
 }
 
 enum RaffleState {
-  WAITING  @map("waiting")
-  PASSED   @map("passed")
-  REJECTED @map("rejected")
-  CANCELED @map("canceled")
-  FINISHED @map("finished")
+  WAITING
+  PASSED
+  REJECTED
+  CANCELED
+  FINISHED
 }
 
 enum RaffleType {
-  COMMON @map("common")
-  COMBO  @map("combo")
+  COMMON
+  COMBO
 }
