@@ -3,7 +3,7 @@ model Management {
   name        String
   email       String
   password    String
-  permissions Permissions
+  permissions Permissions @default(OWNER)
   createdAt   DateTime    @default(now()) @map("created_at")
   updateAt    DateTime    @updatedAt @map("updated_at")
 
@@ -11,8 +11,8 @@ model Management {
 }
 
 enum Permissions {
-  OWNER         @map("owner")
-  ADMINISTRATOR @map("administrator")
-  EDITOR        @map("editor")
-  ANALYZER      @map("analyzer")
+  OWNER
+  ADMINISTRATOR
+  EDITOR
+  ANALYZER
 }

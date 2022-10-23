@@ -5,7 +5,7 @@
 
 */
 -- CreateEnum
-CREATE TYPE "RaffleCategory" AS ENUM ('cellphone', 'event', 'travel');
+CREATE TYPE "RaffleCategory" AS ENUM ('CELLPHONE', 'EVENT', 'TRAVEL', 'UNASSIGNED');
 
 -- AlterTable
-ALTER TABLE "raffle" ADD COLUMN     "category" "RaffleCategory" NOT NULL;
+ALTER TABLE "raffle" ADD COLUMN "category" "RaffleCategory" NOT NULL DEFAULT 'UNASSIGNED';

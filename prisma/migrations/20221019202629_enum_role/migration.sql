@@ -5,7 +5,7 @@
 
 */
 -- CreateEnum
-CREATE TYPE "Role" AS ENUM ('company', 'user');
+CREATE TYPE "Role" AS ENUM ('COMPANY', 'USER');
 
 -- AlterTable
-ALTER TABLE "account" ADD COLUMN     "role" "Role" NOT NULL;
+ALTER TABLE "account" ADD COLUMN "role" "Role" NOT NULL DEFAULT 'USER';

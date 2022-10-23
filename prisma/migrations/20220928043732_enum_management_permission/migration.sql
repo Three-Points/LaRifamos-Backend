@@ -1,2 +1,2 @@
 -- CreateEnum
-CREATE TYPE "Permissions" AS ENUM ('owner', 'administrator', 'editor', 'analyzer');
+CREATE TYPE "Permissions" AS ENUM ('OWNER', 'ADMINISTRATOR', 'EDITOR', 'ANALYZER');
