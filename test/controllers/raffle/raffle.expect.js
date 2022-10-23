@@ -1,4 +1,4 @@
-export const raffleExpect = {
+export const expectRaffle = {
     name: expect.any(String),
     drawDate: expect.any(Date),
     participants: expect.any(Number),
