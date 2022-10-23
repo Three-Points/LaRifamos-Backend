@@ -30,8 +30,8 @@ export default class Prisma {
     }
 
     /**
-     * @description Find all registers in model. */
-    findMany(params) {
-        return this.#connect().findMany(params)
+     * @description It returns the connection to the database. */
+    get client() {
+        return this.#connect()
     }
 }
