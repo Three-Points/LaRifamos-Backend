@@ -13,7 +13,7 @@ export default class Raffle {
     /**
      * @description Generate link to Raffle model. */
     constructor() {
-        this.#client = new Prisma('raffle')
+        this.#client = new Prisma('raffle').client
     }
 
     /**

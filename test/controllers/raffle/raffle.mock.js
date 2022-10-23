@@ -1,6 +1,6 @@
 import dayjs from 'dayjs'
 
-export const raffleMock = {
+export const mockRaffle = {
     id: 1,
     name: 'Green Card',
     description:
