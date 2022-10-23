@@ -17,11 +17,21 @@ describe('Unit test on Account controller', () => {
     describe('when looking for an account', () => {
         test('should have a valid response', async () => {
             mockFindUnique.mockImplementationOnce(() =>
-                Promise.resolve({ name: mockAccount.name })
+                Promise.resolve({
+                    id: mockAccount.id,
+                    name: mockAccount.name,
+                    email: mockAccount.email,
+                    password: mockAccount.password,
+                })
             )
             const account = await controller.findAccount({ id: 1 })
             expect(account).toEqual(
-                expect.objectContaining({ name: expectAccount.name })
+                expect.objectContaining({
+                    id: expectAccount.id,
+                    name: expectAccount.name,
+                    email: expectAccount.email,
+                    password: expectAccount.password,
+                })
             )
         })
         test('should have a valid response when including liked raffles', async () => {
@@ -74,14 +84,14 @@ describe('Unit test on Account controller', () => {
                 })
             }
         })
-        test('should throw a SERVER error if it not be send id parameter', async () => {
+        test('should throw a SERVER error if it not be send mandatory parameters', async () => {
             try {
                 await controller.findAccount({})
             } catch ({ code, message, error }) {
                 expect({ code, message, error }).toStrictEqual({
                     code: 500,
                     error: 'Internal Server Error',
-                    message: 'id parameter is mandatory',
+                    message: 'required mandatory parameters',
                 })
             }
         })
@@ -134,6 +144,7 @@ describe('Unit test on Account controller', () => {
             }
         })
     })
+
     describe('when share a raffle', () => {
         test('should connect the raffle if it has not been shared', async () => {
             mockFindUnique.mockImplementationOnce(() =>

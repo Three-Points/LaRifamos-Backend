@@ -4,7 +4,7 @@ export const mockAccount = {
     id: 1,
     name: 'Bethina Tompsett',
     email: 'btompsett0@narod.ru',
-    password: '$2b$10$x/EPic1bki/3NSxpt3JKcefQQHs0H2bRmMv7KfzN742/OCsNDTXPG',
+    password: '$2b$10$QN9y4ZNsOeMegY5FZPSYQu9.9gfouM1A1OkzvK/BzsPJ0REvboO6q',
     role: 'USER',
     createdAt: dayjs().toDate(),
     updatedAt: dayjs().toDate(),

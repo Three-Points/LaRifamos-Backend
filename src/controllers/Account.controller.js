@@ -13,11 +13,13 @@ export default class Account {
      * @throws SERVER, id parameter is mandatory.
      * @throws NOT_FOUND, Account not found.
      * @returns Account, optional includes. */
-    async findAccount({ id, liked, shared }, options = {}) {
-        if (!id) throw new ErrorServer('SERVER', 'id parameter is mandatory')
+    async findAccount({ id, email, liked, shared }, options = {}) {
+        if (!id && !email)
+            throw new ErrorServer('SERVER', 'required mandatory parameters')
         const account = await this.#model.findUnique(
             {
                 id,
+                email,
                 liked,
                 shared,
             },
@@ -26,7 +28,10 @@ export default class Account {
         if (!account) throw new ErrorServer('NOT_FOUND', 'Account not found')
         const { include } = options
         return {
+            id: account.id,
             name: account.name,
+            email: account.email,
+            password: account.password,
             ...((include?.liked || liked) && { liked: account.liked }),
             ...((include?.shared || shared) && { shared: account.shared }),
         }
