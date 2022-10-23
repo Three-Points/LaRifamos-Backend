@@ -7,5 +7,6 @@ CREATE TABLE "account" (
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
-    CONSTRAINT "account_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "account_pkey" PRIMARY KEY ("id"),
+    CONSTRAINT "account_email_key" UNIQUE ("email")
 );
