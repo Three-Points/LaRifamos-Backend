@@ -31,4 +31,14 @@ export default class Raffle {
             }
         })
     }
+
+    async findRaffleId({input_id}){
+        const raffle = await this.#model.findRaffleId(input_id)
+        return raffle[0]["id"]
+
+
+    }
+
+
+
 }

@@ -42,4 +42,13 @@ export default class Raffle {
             },
         })
     }
+
+
+    findRaffleId({input_id}){
+        return this.#client.findUnique({where:{id:input_id}})
+    }
+
+
+
+
 }
