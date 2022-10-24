@@ -7,11 +7,7 @@ import ErrorServer from '@controllers/ErrorServer.controller'
 
 export default class AuthController {
     #controller = new Account()
-    #token
-
-    set token(token) {
-        this.#token = JWT_TOKEN ?? token
-    }
+    #token = JWT_TOKEN
 
     async authentication({ email, password }) {
         if (!email || !password)

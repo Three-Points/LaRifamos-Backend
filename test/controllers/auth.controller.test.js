@@ -3,22 +3,22 @@ import Auth from '@controllers/auth.controller'
 import Account from '@models/Account.model'
 import { mockAccount } from './account/account.mock'
 
-const mockFindUnique = jest.spyOn(Account.prototype, 'findUnique')
-
 afterEach(() => {
     jest.clearAllMocks()
 })
 
+const mockFindUnique = jest.spyOn(Account.prototype, 'findUnique')
+mockFindUnique.mockImplementation(() =>
+    Promise.resolve({
+        id: mockAccount.id,
+        name: mockAccount.name,
+        email: mockAccount.email,
+        password: mockAccount.password,
+    })
+)
+const auth = new Auth()
+
 describe('When trying to authenticate using authentication method', () => {
-    const auth = new Auth()
-    mockFindUnique.mockImplementation(() =>
-        Promise.resolve({
-            id: mockAccount.id,
-            name: mockAccount.name,
-            email: mockAccount.email,
-            password: mockAccount.password,
-        })
-    )
     describe('should throw a UNAUTHORIZED error', () => {
         test('if it not be send email and/or password parameters', async () => {
             try {
@@ -47,7 +47,6 @@ describe('When trying to authenticate using authentication method', () => {
         })
     })
     test('should return a token if the email and password are correct', async () => {
-        auth.token = 'secret'
         const { token } = await auth.authentication({
             email: 'btompsett0@narod.ru',
             password: 'PTszph3',
@@ -63,16 +62,6 @@ describe('When trying to authenticate using authentication method', () => {
 })
 
 describe('when validate an identity using verification method', () => {
-    const mockJWTVerify = jest.spyOn(jwt, 'verify')
-    const auth = new Auth()
-    mockFindUnique.mockImplementation(() =>
-        Promise.resolve({
-            id: mockAccount.id,
-            name: mockAccount.name,
-            email: mockAccount.email,
-            password: mockAccount.password,
-        })
-    )
     test('should throw a UNAUTHORIZED error to send bad token', async () => {
         try {
             await auth.verification('bad-token')
@@ -85,7 +74,7 @@ describe('when validate an identity using verification method', () => {
         }
     })
     test('should return an account if the token is valid', async () => {
-        mockJWTVerify.mockImplementation(() => ({
+        jest.spyOn(jwt, 'verify').mockImplementation(() => ({
             email: 'btompsett0@narod.ru',
         }))
         const account = await auth.verification('valid-token')
