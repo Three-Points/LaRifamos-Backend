@@ -47,6 +47,7 @@ describe('When trying to authenticate using authentication method', () => {
         })
     })
     test('should return a token if the email and password are correct', async () => {
+        auth.token = 'secret'
         const { token } = await auth.authentication({
             email: 'btompsett0@narod.ru',
             password: 'PTszph3',
@@ -90,7 +91,6 @@ describe('when validate an identity using verification method', () => {
         const account = await auth.verification('valid-token')
         expect(account).toEqual(
             expect.objectContaining({
-                id: expect.any(Number),
                 name: expect.any(String),
                 email: expect.any(String),
             })

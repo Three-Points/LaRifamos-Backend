@@ -1,4 +1,5 @@
 export const expectRaffle = {
+    id: expect.any(Number),
     name: expect.any(String),
     drawDate: expect.any(Date),
     participants: expect.any(Number),

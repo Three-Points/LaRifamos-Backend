@@ -22,11 +22,15 @@ export default class Account {
      * @param query Query request object.
      * @param options Options request object.
      * @throws SERVER, id parameter is mandatory. */
-    findUnique({ id, liked, shared }, options = {}) {
-        if (!id) throw new ErrorServer('SERVER', 'id parameter is mandatory')
+    findUnique({ id, email, liked, shared }, options = {}) {
+        if (!id && !email)
+            throw new ErrorServer('SERVER', 'required mandatory parameters')
         const { include } = options
         return this.#client.findUnique({
-            where: { id },
+            where: {
+                ...(id && { id }),
+                ...(email && { email }),
+            },
             ...(liked?.id && {
                 include: {
                     liked: {
