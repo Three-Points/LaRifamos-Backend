@@ -131,6 +131,9 @@
         },
         "modulePathIgnorePatterns": [
             "<rootDir>/src/db"
+        ],
+        "setupFiles": [
+            "<rootDir>/test/config/env.js"
         ]
     },
     "prisma": {
