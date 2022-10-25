@@ -11,7 +11,7 @@ export default class Raffle {
      *  - name, partial match.
      *  - state or type, exact match.
      * @param filters Filters supported on this model.
-     * @returns Collection of Raffles. */
+     * @returns Collection of Raffles.  */
     //TODO Relate participants as a count
     async findMany({ categories, name, state, type }) {
         const filters = { categories, name, state, type }
