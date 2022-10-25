@@ -13,6 +13,11 @@ export const mockRaffle = {
     type: 'COMBO',
     createdAt: dayjs().toDate(),
     updatedAt: dayjs().toDate(),
+    tickets: [
+        {
+            number: '3b8cd0d2-5f88-4518-b2c8-a119745d83e3',
+        },
+    ],
     products: [
         {
             id: 1,
