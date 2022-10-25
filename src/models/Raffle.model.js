@@ -39,6 +39,7 @@ export default class Raffle {
                         images: true,
                     },
                 },
+                tickets: true,
             },
         })
     }
