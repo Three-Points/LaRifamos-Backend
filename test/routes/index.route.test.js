@@ -79,12 +79,19 @@ describe('When request to login route', () => {
 })
 
 describe('When request to verify route', () => {
-    test('should throw an UNAUTHORIZED error if it send a bad JWT token', async () => {
-        const { status, text: response } = await request
-            .get('/verify')
-            .set('Authorization', 'bad-token')
-        expect(status).toBe(401)
-        expect(response).toBe('Token is invalid')
+    describe('should throw an UNAUTHORIZED error', () => {
+        test('when it does not send a token', async () => {
+            const { status, text: response } = await request.get('/verify')
+            expect(status).toBe(401)
+            expect(response).toBe('Token is required')
+        })
+        test('should throw an UNAUTHORIZED error if it send a bad JWT token', async () => {
+            const { status, text: response } = await request
+                .get('/verify')
+                .set('Authorization', 'bad-token')
+            expect(status).toBe(401)
+            expect(response).toBe('Token is invalid')
+        })
     })
     test('should return a basic information of an account to verify identity from token', async () => {
         jest.spyOn(jwt, 'verify').mockImplementationOnce(() => ({
