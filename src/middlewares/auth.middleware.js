@@ -17,6 +17,8 @@ export const verifyAPIToken = async (req, _, next) => {
  * @description Verify user token. */
 export const verifyJWTToken = async (req, res, next) => {
     const { authorization } = req.headers
+    if (!authorization)
+        throw new ErrorServer('UNAUTHORIZED', 'Token is required')
     res.locals.data = await auth.verification(authorization)
     next()
 }
