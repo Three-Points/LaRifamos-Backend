@@ -12,15 +12,15 @@ export default class Raffle {
      *  - state or type, exact match.
      * @param filters Filters supported on this model.
      * @returns Collection of Raffles. */
-    //TODO Relate participants as a count
-    async findMany({ categories, name, state, type }) {
+    async findRaffles({ categories, name, state, type }) {
         const filters = { categories, name, state, type }
         const raffles = await this.#model.findMany(filters)
-        return raffles.map(({ products, ...raffle }) => {
+        return raffles.map(({ products, tickets, ...raffle }) => {
             return {
+                id: raffle.id,
                 name: raffle.name,
                 drawDate: raffle.drawDate,
-                participants: 978,
+                participants: tickets.length,
                 ticketCost: raffle.ticketCost,
                 state: raffle.state,
                 type: raffle.type,

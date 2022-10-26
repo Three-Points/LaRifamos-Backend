@@ -23,17 +23,25 @@ describe('When looking an account using findUnique method', () => {
         await account.findUnique({ id: 1 })
         expect(mockFindUnique).toHaveBeenCalled()
 
-        const _calls = mockFindUnique.mock.calls[0][0]
+        let _calls = mockFindUnique.mock.calls[0][0]
         expect(_calls.hasOwnProperty('where')).toBe(true)
+        expect(_calls.where.hasOwnProperty('id')).toBe(true)
+
+        await account.findUnique({ email: 'btompsett0@narod.ru' })
+        expect(mockFindUnique).toHaveBeenCalled()
+
+        _calls = mockFindUnique.mock.calls[1][0]
+        expect(_calls.hasOwnProperty('where')).toBe(true)
+        expect(_calls.where.hasOwnProperty('email')).toBe(true)
     })
-    test('should throw a SERVER error if it not be send id parameter', async () => {
+    test('should throw a SERVER error if it not be send mandatory parameters', async () => {
         try {
             await account.findUnique({})
         } catch ({ code, message, error }) {
             expect({ code, message, error }).toStrictEqual({
                 code: 500,
                 error: 'Internal Server Error',
-                message: 'id parameter is mandatory',
+                message: 'required mandatory parameters',
             })
         }
     })

@@ -12,8 +12,9 @@
         "db:seed": "babel-node ./src/db/seeds/dev.seed.js",
         "db:migrate": "npx prisma migrate dev --name",
         "db:deploy": "npx prisma migrate deploy",
-        "test": "jest",
-        "test:coverage": "jest --coverage",
+        "test": "jest --silent",
+        "test:debugger": "jest -t",
+        "test:coverage": "jest --coverage --silent",
         "format": "npx prettier --write .",
         "dev": "nodemon ./src/index --exec babel-node",
         "build": "babel ./src -d ./dist/src",
@@ -131,6 +132,9 @@
         },
         "modulePathIgnorePatterns": [
             "<rootDir>/src/db"
+        ],
+        "setupFiles": [
+            "<rootDir>/test/config/env.js"
         ]
     },
     "prisma": {

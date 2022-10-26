@@ -55,9 +55,10 @@ describe('When looking an account using findMany method', () => {
             expect(_callFindMany?.where.hasOwnProperty('type')).toBe(true)
         })
     })
-    test('and want to include products relation', async () => {
+    test('and want to include products and tickets relation', async () => {
         await raffle.findMany({})
         const _calls = mockFindMany.mock.calls[0][0]
         expect(_calls?.include.hasOwnProperty('products')).toBe(true)
+        expect(_calls?.include.hasOwnProperty('tickets')).toBe(true)
     })
 })
