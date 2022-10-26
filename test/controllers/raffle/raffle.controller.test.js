@@ -37,5 +37,4 @@ describe('Raffle Controller', () => {
         const raffle = await controller.findRaffleId({ input_id: 99999 })
         expect(raffle).toEqual([])
     })
-
 })
