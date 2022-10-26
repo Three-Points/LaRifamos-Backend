@@ -1,0 +1,14 @@
+services:
+    server:
+        build: .
+        container_name: ${MODE}
+        ports:
+            - ${PORT}:${PORT}
+        expose:
+            - ${PORT}
+        environment:
+            - ENVIRONMENT
+            - PORT
+            - JWT_TOKEN
+            - DB_URL
+            - SERVER_URL

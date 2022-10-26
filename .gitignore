@@ -1,5 +1,6 @@
 # Server
 debug
+dist
 node_modules
 .env
 

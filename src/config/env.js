@@ -4,7 +4,7 @@ import dotenvExpand from 'dotenv-expand'
 const env = dotenv.config()
 dotenvExpand.expand(env)
 
-export const MODE = process.env.MODE || process.env.NODE_ENV
+export const ENVIRONMENT = process.env.ENVIRONMENT
 export const PORT = process.env.PORT
 export const JWT_TOKEN = process.env.JWT_TOKEN
 

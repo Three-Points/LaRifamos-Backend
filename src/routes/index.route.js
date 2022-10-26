@@ -16,7 +16,7 @@ router.get(
         info('GET /')
         res.locals.data = {
             project: 'LaRifamos',
-            mode: server.get('mode'),
+            environment: server.get('ENVIRONMENT'),
             version: server.get('version'),
         }
         next()
