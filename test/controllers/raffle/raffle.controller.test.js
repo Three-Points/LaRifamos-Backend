@@ -32,4 +32,10 @@ describe('Raffle Controller', () => {
         expect(raffles).toEqual(expect.arrayContaining([expectRaffle]))
         expect(raffles[0].type).toBe('COMBO')
     })
+
+    test('should return the raffle id', async () => {
+        const raffleId = await controller.findRaffleId({ input_id: 1 })
+        console.log(raffleId)
+        expect(raffleId).toEqual(1)
+    })
 })
