@@ -19,7 +19,7 @@ jobs:
           node-version: 14
 
       - name: 🚧 Install dependencies and Build project
-        run: pnpm install --no-frozen-lockfile && pnpm run build
+        run: npm install && npm run build
 
       - name: 🏷 Upload artifact
         uses: actions/upload-artifact@v3
