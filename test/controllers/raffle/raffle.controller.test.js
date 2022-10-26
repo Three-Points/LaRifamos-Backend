@@ -33,9 +33,9 @@ describe('Raffle Controller', () => {
         expect(raffles[0].type).toBe('COMBO')
     })
 
-    test('should return the raffle id', async () => {
-        const raffleId = await controller.findRaffleId({ input_id: 1 })
-        console.log(raffleId)
-        expect(raffleId).toEqual(1)
+    test('should return an empty array in case no id is found', async () => {
+        const raffle = await controller.findRaffleId({ input_id: 99999 })
+        expect(raffle).toEqual([])
     })
+
 })
