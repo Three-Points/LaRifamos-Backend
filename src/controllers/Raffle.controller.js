@@ -32,13 +32,11 @@ export default class Raffle {
         })
     }
 
-    async findRaffleId({input_id}){
-        const raffle = await this.#model.findRaffleId(input_id)
-        return raffle[0]["id"]
-
-
+    async findRaffleId({ input_id }) {
+        const raffle = await this.#model.findUnique({input_id: input_id})
+        
+        raffle['tickets'] = raffle['tickets'].length
+        console.log(raffle)
+        return raffle['id']
     }
-
-
-
 }
