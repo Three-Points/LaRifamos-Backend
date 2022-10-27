@@ -34,8 +34,7 @@ export default class Raffle {
     }
 
     async findRaffleId({ id }) {
-        
-        if (Number.isNaN(id)){
+        if (Number.isNaN(id)) {
             throw new ErrorServer('SERVER', 'required mandatory parameters')
         }
         const raffle = await this.#model.findUnique({ id })
@@ -44,8 +43,6 @@ export default class Raffle {
             throw new ErrorServer('NOT_FOUND', 'Raffle not found')
         }
 
-
-        return { ...raffle, participants: raffle.tickets.length
-                }
+        return { ...raffle, participants: raffle.tickets.length }
     }
 }
