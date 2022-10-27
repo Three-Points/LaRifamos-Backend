@@ -44,16 +44,16 @@ export default class Raffle {
         })
     }
 
-    findUnique({ input_id }) {
+    findUnique({ id }) {
         return this.#client.findUnique({
-            where: { id: input_id },
+            where: { id },
             include: {
                 products: {
                     include: {
                         images: true,
                     },
                 },
-                tickets: {},
+                tickets: true,
             },
         })
     }
