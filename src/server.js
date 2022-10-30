@@ -1,9 +1,6 @@
 import cors from 'cors'
 import express from 'express'
 
-import { MODE, PORT } from '@config/env'
-import { version } from '../package.json'
-
 import index from '@routes/index.route'
 import raffle from '@routes/raffle.route'
 import raffles from '@routes/raffles.route'
@@ -12,9 +9,6 @@ import { error } from '@middlewares/response.middleware'
 
 const server = express()
 
-server.set('version', version)
-server.set('port', PORT)
-server.set('mode', MODE)
 server.set('json spaces', 4)
 
 server.use(cors())

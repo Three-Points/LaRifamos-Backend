@@ -1,11 +1,15 @@
 FROM node:16
 
+RUN curl -f https://get.pnpm.io/v6.16.js | node - add --global pnpm
+
 WORKDIR /server
 
-COPY package.json package-lock.json dist ./
+COPY .npmrc package.json pnpm-lock.yaml ./
 
-RUN npm ci --only=production --ignore-scripts
+COPY dist ./
+COPY prisma ./prisma
 
-expose 80
+RUN pnpm install
 
-CMD [ "npm", "start" ]
+EXPOSE 80
+CMD [ "pnpm", "start" ]

@@ -1,7 +1,7 @@
 services:
     server:
         build: .
-        container_name: ${MODE}
+        container_name: ${ENVIRONMENT}
         ports:
             - ${PORT}:${PORT}
         expose:
@@ -10,5 +10,6 @@ services:
             - ENVIRONMENT
             - PORT
             - JWT_TOKEN
+            - API_TOKEN
             - DB_URL
             - SERVER_URL
