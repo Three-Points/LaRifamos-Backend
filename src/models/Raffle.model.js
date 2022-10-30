@@ -43,6 +43,10 @@ export default class Raffle {
         })
     }
 
+    /**
+     * @description Returns a raffle if there is any.
+     * @param query Query request object.
+     * @throws SERVER, id parameter is mandatory. */
     findUnique({ id }) {
         return this.#client.findUnique({
             where: { id },

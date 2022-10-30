@@ -32,7 +32,11 @@ export default class Raffle {
         })
     }
 
-    async findRaffleId({ id }) {
+    /**
+     * @description
+     * Returns a raffle if there is any.
+     * @param query Query request object. */
+    async findRaffle({ id }) {
         if (Number.isNaN(id)) {
             throw new ErrorServer('SERVER', 'required mandatory parameters')
         }

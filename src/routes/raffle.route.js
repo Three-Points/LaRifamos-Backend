@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { verifyJWTToken } from '@middlewares/auth.middleware'
+import { verifyAPIToken, verifyJWTToken } from '@middlewares/auth.middleware'
 import { success } from '@middlewares/response.middleware'
 import wrapper from '@middlewares/wrapper.middleware'
 import {
@@ -13,10 +13,10 @@ const router = Router()
 
 /**
  * @name GET
- * @description Gets project info as health route. */
+ * @description Get a Raffle by ID. */
 router.get(
     '/:id',
-    //wrapper(verifyAPIToken),
+    wrapper(verifyAPIToken),
     wrapper(async (req, res, next) => {
         info('GET /raffle/:id')
         const { id } = req.params

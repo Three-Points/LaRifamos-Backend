@@ -9,7 +9,7 @@ const raffle = new Raffle()
  * @param raffleId raffleId request object.
  * @returns User array. */
 export const getRaffle = (raffleId) => {
-    return raffle.findRaffleId({ id: raffleId })
+    return raffle.findRaffle({ id: raffleId })
 }
 
 /**
