@@ -19,8 +19,7 @@ export default class Raffle {
     /**
      * @description
      * Returns a list of raffles and its products related.
-     * @param filters Filters supported on this model.
-     * @returns Collection of Raffles. */
+     * @param filters Filters supported on this model. */
     findMany({ categories, name, state, type }) {
         return this.#client.findMany({
             where: {
