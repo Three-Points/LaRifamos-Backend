@@ -16,10 +16,15 @@ jobs:
       - name: 🛠 Setup NodeJS
         uses: actions/setup-node@v3
         with:
-          node-version: 14
+          node-version: 16
+
+      - name: 🛠 Setup PNPM
+        uses: pnpm/action-setup@v2.2.4
+        with:
+          version: 7
 
       - name: 🚧 Install dependencies and Build project
-        run: npm install && npm run build
+        run: pnpm install && pnpm build
 
       - name: 🏷 Upload artifact
         uses: actions/upload-artifact@v3
@@ -27,6 +32,8 @@ jobs:
           name: build
           path: |
             dist/
+            prisma/
+            .npmrc
             Dockerfile
             package-lock.json
             package.json
