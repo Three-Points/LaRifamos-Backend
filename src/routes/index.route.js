@@ -30,12 +30,12 @@ router.get(
 
 /**
  * @name POST
- * @description Login. */
+ * @description Login account. */
 router.post('/login', wrapper(verifyAPIToken), wrapper(login), success)
 
 /**
  * @name GET
- * @description Verify. */
+ * @description Get an identification of the current JWT. */
 router.get('/verify', wrapper(verifyJWTToken), success)
 
 export default router

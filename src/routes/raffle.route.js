@@ -9,7 +9,7 @@ const router = Router()
 
 /**
  * @name POST
- * @description Gets project info as health route. */
+ * @description Like a raffle and connect it with an account. */
 router.post(
     '/like/:id',
     wrapper(verifyJWTToken),
@@ -17,7 +17,7 @@ router.post(
         info('POST /raffle/like/:id')
         const { id } = req.params
         const account = res.locals.data
-        await postRateRaffle(account.email, Number(id))
+        await postRateRaffle(account?.email, Number(id))
         res.locals.code = 204
         next()
     }),
@@ -26,7 +26,7 @@ router.post(
 
 /**
  * @name POST
- * @description Gets project info as health route. */
+ * @description Share a raffle and connect it with an account. */
 router.post(
     '/share/:id',
     wrapper(verifyJWTToken),
@@ -34,7 +34,7 @@ router.post(
         info('POST /raffle/share/:id')
         const { id } = req.params
         const account = res.locals.data
-        await postShareRaffle(account.email, Number(id))
+        await postShareRaffle(account?.email, Number(id))
         res.locals.code = 204
         next()
     }),
