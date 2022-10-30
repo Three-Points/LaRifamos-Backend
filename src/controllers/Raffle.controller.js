@@ -1,4 +1,5 @@
 import RaffleModel from '@models/Raffle.model'
+import ErrorServer from './ErrorServer.controller'
 
 export default class Raffle {
     #model = new RaffleModel()
@@ -10,17 +11,16 @@ export default class Raffle {
      *  - categories, conjunction filter.
      *  - name, partial match.
      *  - state or type, exact match.
-     * @param filters Filters supported on this model.
-     * @returns Collection of Raffles. */
-    //TODO Relate participants as a count
-    async findMany({ categories, name, state, type }) {
+     * @param filters Filters supported on this model. */
+    async findRaffles({ categories, name, state, type }) {
         const filters = { categories, name, state, type }
         const raffles = await this.#model.findMany(filters)
-        return raffles.map(({ products, ...raffle }) => {
+        return raffles.map(({ products, tickets, ...raffle }) => {
             return {
+                id: raffle.id,
                 name: raffle.name,
                 drawDate: raffle.drawDate,
-                participants: 978,
+                participants: tickets.length,
                 ticketCost: raffle.ticketCost,
                 state: raffle.state,
                 type: raffle.type,
@@ -30,5 +30,22 @@ export default class Raffle {
                 })),
             }
         })
+    }
+
+    /**
+     * @description
+     * Returns a raffle if there is any.
+     * @param query Query request object. */
+    async findRaffle({ id }) {
+        if (Number.isNaN(id)) {
+            throw new ErrorServer('SERVER', 'required mandatory parameters')
+        }
+        const raffle = await this.#model.findUnique({ id })
+
+        if (!raffle) {
+            throw new ErrorServer('NOT_FOUND', 'Raffle not found')
+        }
+
+        return { ...raffle, participants: raffle.tickets.length }
     }
 }

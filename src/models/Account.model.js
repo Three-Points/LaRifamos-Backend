@@ -2,9 +2,9 @@ import Prisma from '@libs/Prisma'
 import ErrorServer from '@controllers/ErrorServer.controller'
 
 /**
- * @class Raffle
+ * @class Account
  * @extends Model
- * @description Raffle model class. */
+ * @description Account model class. */
 export default class Account {
     /**
      * @private
@@ -12,7 +12,7 @@ export default class Account {
     #client
 
     /**
-     * @description Generate link to Raffle model. */
+     * @description Generate link to Account model. */
     constructor() {
         this.#client = new Prisma('account').client
     }
@@ -22,11 +22,15 @@ export default class Account {
      * @param query Query request object.
      * @param options Options request object.
      * @throws SERVER, id parameter is mandatory. */
-    findUnique({ id, liked, shared }, options = {}) {
-        if (!id) throw new ErrorServer('SERVER', 'id parameter is mandatory')
+    findUnique({ id, email, liked, shared }, options = {}) {
+        if (!id && !email)
+            throw new ErrorServer('SERVER', 'required mandatory parameters')
         const { include } = options
         return this.#client.findUnique({
-            where: { id },
+            where: {
+                ...(id && { id }),
+                ...(email && { email }),
+            },
             ...(liked?.id && {
                 include: {
                     liked: {
@@ -48,13 +52,12 @@ export default class Account {
     /**
      * @description
      * Update an account.
-     * Connection/Disconnection with raffle to share or liked.
+     * Used by connect and disconnect methods.
      * @param query Query request object.
      * @param payload Payload request object.
      * @param options Options request object.
      * @throws SERVER, id parameter is mandatory.
-     * @throws SERVER, payload parameter is mandatory.
-     * @returns Result set after update.*/
+     * @throws SERVER, payload parameter is mandatory. */
     update({ id }, payload, options = {}) {
         if (!id) throw new ErrorServer('SERVER', 'id parameter is mandatory')
         if (!Object.keys(payload).length)
@@ -70,17 +73,14 @@ export default class Account {
     /**
      * @description
      * Link an account with a raffle.
-     * Connection with raffle to share.
      * @param query Query request object.
      * @param payload Payload request object.
      * @throws SERVER, id parameter is mandatory.
-     * @throws SERVER, payload parameter is mandatory.
-     * @returns Result set after update. */
+     * @throws SERVER, payload parameter is mandatory. */
     connect({ id }, { likedRaffleId, sharedRaffleId }) {
         if (!id) throw new ErrorServer('SERVER', 'id parameter is mandatory')
         if (!likedRaffleId && !sharedRaffleId)
             throw new ErrorServer('SERVER', 'payload parameter is mandatory')
-
         return this.update(
             { id },
             {
@@ -104,8 +104,7 @@ export default class Account {
      * @param query Query request object.
      * @param payload Payload request object.
      * @throws SERVER, id parameter is mandatory.
-     * @throws SERVER, likedRaffleId parameter is mandatory.
-     * @returns Result set after update. */
+     * @throws SERVER, likedRaffleId parameter is mandatory. */
     disconnect({ id }, { likedRaffleId }) {
         if (!id) throw new ErrorServer('SERVER', 'id parameter is mandatory')
         if (!likedRaffleId)

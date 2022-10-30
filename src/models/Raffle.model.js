@@ -19,8 +19,7 @@ export default class Raffle {
     /**
      * @description
      * Returns a list of raffles and its products related.
-     * @param filters Filters supported on this model.
-     * @returns Collection of Raffles. */
+     * @param filters Filters supported on this model. */
     findMany({ categories, name, state, type }) {
         return this.#client.findMany({
             where: {
@@ -39,6 +38,25 @@ export default class Raffle {
                         images: true,
                     },
                 },
+                tickets: true,
+            },
+        })
+    }
+
+    /**
+     * @description Returns a raffle if there is any.
+     * @param query Query request object.
+     * @throws SERVER, id parameter is mandatory. */
+    findUnique({ id }) {
+        return this.#client.findUnique({
+            where: { id },
+            include: {
+                products: {
+                    include: {
+                        images: true,
+                    },
+                },
+                tickets: true,
             },
         })
     }

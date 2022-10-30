@@ -7,6 +7,7 @@ import ErrorServer from '@controllers/ErrorServer.controller'
 
 export default class AuthController {
     #controller = new Account()
+    #token = JWT_TOKEN
 
     async authentication({ email, password }) {
         if (!email || !password)
@@ -20,15 +21,14 @@ export default class AuthController {
         if (!account || !(await bcrypt.compare(password, account?.password)))
             throw new ErrorServer('UNAUTHORIZED', 'Email or password is wrong')
         const payload = { email: account.email, name: account.name }
-        return { token: jwt.sign(payload, JWT_TOKEN) }
+        return { token: jwt.sign(payload, this.#token) }
     }
 
     async verification(token) {
         try {
-            const { email } = jwt.verify(token, JWT_TOKEN)
+            const { email } = jwt.verify(token, this.#token)
             const account = await this.#controller.findAccount({ email })
             return {
-                id: account.id,
                 name: account.name,
                 email: account.email,
             }

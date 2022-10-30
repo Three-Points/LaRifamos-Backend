@@ -10,13 +10,12 @@ export const error = (err, req, res, _) => {
 
 /**
  * @description Handler successful response as express middleware. */
+//TODO Create pagination ...(res.locals.info && { info: res.locals.info })
 export const success = (req, res, _) => {
     complete(`${req.method} operation`)
-    res.status(200).json({
-        ...(res.locals.info && { info: res.locals.info }),
-        ...(res.locals.results && {
-            results: res.locals.results,
-        }),
-        ...res.locals.data,
+    const { result, data, code } = res.locals
+    res.status(code || 200).json({
+        ...(!result && { ...data }),
+        ...(result && { results: res.locals.result }),
     })
 }

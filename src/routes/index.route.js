@@ -1,5 +1,9 @@
 import { Router } from 'express'
-
+import {
+    verifyAPIToken,
+    verifyJWTToken,
+    login,
+} from '@middlewares/auth.middleware'
 import server from '../server'
 import { success } from '@middlewares/response.middleware'
 import wrapper from '@middlewares/wrapper.middleware'
@@ -23,5 +27,15 @@ router.get(
     }),
     success
 )
+
+/**
+ * @name POST
+ * @description Login account. */
+router.post('/login', wrapper(verifyAPIToken), wrapper(login), success)
+
+/**
+ * @name GET
+ * @description Get an identification of the current JWT. */
+router.get('/verify', wrapper(verifyJWTToken), success)
 
 export default router

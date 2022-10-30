@@ -1,6 +1,6 @@
 import Controller from '@controllers/Account.controller'
 import Account from '@models/Account.model'
-import { mockAccount } from './account.mock'
+import { mockAccount } from '../../mocks/account.mock'
 import { expectAccount } from './account.expect'
 
 const mockFindUnique = jest.spyOn(Account.prototype, 'findUnique')
