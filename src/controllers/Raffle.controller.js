@@ -1,4 +1,5 @@
 import RaffleModel from '@models/Raffle.model'
+import ErrorServer from './ErrorServer.controller'
 
 export default class Raffle {
     #model = new RaffleModel()
@@ -29,5 +30,18 @@ export default class Raffle {
                 })),
             }
         })
+    }
+
+    async findRaffleId({ id }) {
+        if (Number.isNaN(id)) {
+            throw new ErrorServer('SERVER', 'required mandatory parameters')
+        }
+        const raffle = await this.#model.findUnique({ id })
+
+        if (!raffle) {
+            throw new ErrorServer('NOT_FOUND', 'Raffle not found')
+        }
+
+        return { ...raffle, participants: raffle.tickets.length }
     }
 }

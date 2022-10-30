@@ -42,4 +42,18 @@ export default class Raffle {
             },
         })
     }
+
+    findUnique({ id }) {
+        return this.#client.findUnique({
+            where: { id },
+            include: {
+                products: {
+                    include: {
+                        images: true,
+                    },
+                },
+                tickets: true,
+            },
+        })
+    }
 }

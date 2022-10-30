@@ -6,6 +6,14 @@ const raffle = new Raffle()
 
 /**
  * @description Find all raffles.
+ * @param raffleId raffleId request object.
+ * @returns User array. */
+export const getRaffle = (raffleId) => {
+    return raffle.findRaffleId({ id: raffleId })
+}
+
+/**
+ * @description Find all raffles.
  * @param filter Filter request object.
  * @returns User array. */
 export const getRaffles = (filter) => {
