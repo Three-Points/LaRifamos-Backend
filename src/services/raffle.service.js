@@ -37,3 +37,11 @@ export const postShareRaffle = async (email, raffleId) => {
     const { id: accountId } = await account.findAccount({ email })
     await account.shareRaffle({ accountId }, { raffleId })
 }
+
+/**
+ * @description
+ * Returns a list of raffles liked by an account.
+ * @param {string} email Email of an account. */
+export const getLikedRaffles = (email) => {
+    return account.findLikedRaffles({ email })
+}
