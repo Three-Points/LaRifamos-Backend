@@ -101,4 +101,19 @@ export default class Account {
             )
         }
     }
+
+    /**
+     * @description
+     * Returns a list of raffles liked by an account.
+     * Query by:
+     *  - id, ID of account.
+     *  - email, email of account.
+     * @param query Query request object. */
+    async findLikedRaffles({ id, email }) {
+        const { liked } = await this.findAccount(
+            { id, email },
+            { include: { liked: true } }
+        )
+        return liked
+    }
 }

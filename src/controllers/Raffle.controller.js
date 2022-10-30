@@ -10,8 +10,7 @@ export default class Raffle {
      *  - categories, conjunction filter.
      *  - name, partial match.
      *  - state or type, exact match.
-     * @param filters Filters supported on this model.
-     * @returns Collection of Raffles. */
+     * @param filters Filters supported on this model. */
     async findRaffles({ categories, name, state, type }) {
         const filters = { categories, name, state, type }
         const raffles = await this.#model.findMany(filters)
