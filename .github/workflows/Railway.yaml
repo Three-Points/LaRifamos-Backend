@@ -35,7 +35,7 @@ jobs:
             prisma/
             .npmrc
             Dockerfile
-            package-lock.json
+            pnpm-lock.yaml
             package.json
 
   publish:
