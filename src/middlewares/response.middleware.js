@@ -13,10 +13,9 @@ export const error = (err, req, res, _) => {
 //TODO Create pagination ...(res.locals.info && { info: res.locals.info })
 export const success = (req, res, _) => {
     complete(`${req.method} operation`)
-    res.status(res.locals.code || 200).json({
-        ...(res.locals.result && {
-            results: res.locals.result,
-        }),
-        ...res.locals.data,
+    const { result, data, code } = res.locals
+    res.status(code || 200).json({
+        ...(!result && { ...data }),
+        ...(result && { results: res.locals.result }),
     })
 }
