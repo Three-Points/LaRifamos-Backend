@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken'
 import Auth from '@controllers/auth.controller'
 import Account from '@models/Account.model'
-import { mockAccount } from './account/account.mock'
+import { mockAccount } from '../mocks/account.mock'
 
 afterEach(() => {
     jest.clearAllMocks()

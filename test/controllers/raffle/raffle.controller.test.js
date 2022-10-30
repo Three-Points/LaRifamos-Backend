@@ -1,7 +1,7 @@
 import Controller from '@controllers/Raffle.controller'
 import Raffle from '@models/Raffle.model'
 import { expectRaffle } from './raffle.expect'
-import { mockRaffle } from './raffle.mock'
+import { mockRaffle } from '../../mocks/raffle.mock'
 
 const mockFindRaffles = jest.spyOn(Raffle.prototype, 'findMany')
 

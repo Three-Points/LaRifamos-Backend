@@ -17,182 +17,165 @@ afterEach(() => {
     jest.clearAllMocks()
 })
 
-describe('When looking an account using findUnique method', () => {
+describe('Unit test on Account model', () => {
     const account = new Account()
-    test('should work without throw an error', async () => {
-        await account.findUnique({ id: 1 })
-        expect(mockFindUnique).toHaveBeenCalled()
-
-        let _calls = mockFindUnique.mock.calls[0][0]
-        expect(_calls.hasOwnProperty('where')).toBe(true)
-        expect(_calls.where.hasOwnProperty('id')).toBe(true)
-
-        await account.findUnique({ email: 'btompsett0@narod.ru' })
-        expect(mockFindUnique).toHaveBeenCalled()
-
-        _calls = mockFindUnique.mock.calls[1][0]
-        expect(_calls.hasOwnProperty('where')).toBe(true)
-        expect(_calls.where.hasOwnProperty('email')).toBe(true)
-    })
-    test('should throw a SERVER error if it not be send mandatory parameters', async () => {
-        try {
-            await account.findUnique({})
-        } catch ({ code, message, error }) {
-            expect({ code, message, error }).toStrictEqual({
-                code: 500,
-                error: 'Internal Server Error',
-                message: 'required mandatory parameters',
-            })
-        }
-    })
-    describe('to include raffles relations', () => {
-        test('should be included liked or shared raffles', async () => {
+    describe('Using the findUnique method to find an account', () => {
+        test('should be called by id and optionally include specific liked raffle', async () => {
             await account.findUnique({ id: 1, liked: { id: 1 } })
-
-            let _calls = mockFindUnique.mock.calls[0][0]
-            expect(_calls.hasOwnProperty('include')).toBe(true)
-            expect(_calls?.include.hasOwnProperty('liked')).toBe(true)
-            expect(_calls?.include?.liked).toEqual(
+            expect(mockFindUnique.mock.calls[0][0]).toEqual(
                 expect.objectContaining({
                     where: expect.objectContaining({
                         id: expect.any(Number),
                     }),
-                })
-            )
-
-            await account.findUnique({ id: 1, shared: { id: 1 } })
-            _calls = mockFindUnique.mock.calls[1][0]
-            expect(_calls.hasOwnProperty('include')).toBe(true)
-            expect(_calls?.include.hasOwnProperty('shared')).toBe(true)
-            expect(_calls?.include?.shared).toEqual(
-                expect.objectContaining({
-                    where: expect.objectContaining({
-                        id: expect.any(Number),
+                    include: expect.objectContaining({
+                        liked: expect.objectContaining({
+                            where: expect.objectContaining({
+                                id: expect.any(Number),
+                            }),
+                        }),
                     }),
                 })
             )
         })
-        test('using options parameters to only join relation as response', async () => {
+        test('should be called by id and include raffle relations', async () => {
             await account.findUnique({ id: 1 }, { include: { liked: true } })
-            const _calls = mockFindUnique.mock.calls[0][0]
-            expect(_calls.hasOwnProperty('include')).toBe(true)
+            expect(
+                mockFindUnique.mock.calls[0][0].hasOwnProperty('include')
+            ).toBe(true)
+        })
+        test('should be called by email and optionally include specific shared raffle', async () => {
+            await account.findUnique({ email: 'btompsett0@narod.ru' })
+            expect(mockFindUnique.mock.calls[0][0]).toEqual(
+                expect.objectContaining({
+                    where: expect.objectContaining({
+                        email: expect.any(Number),
+                    }),
+                    include: expect.objectContaining({
+                        shared: expect.objectContaining({
+                            where: expect.objectContaining({
+                                id: expect.any(Number),
+                            }),
+                        }),
+                    }),
+                })
+            )
+        })
+        test('should throw a SERVER error if it not be send mandatory parameters', async () => {
+            try {
+                await account.findUnique({})
+            } catch ({ code, message, error }) {
+                expect({ code, message, error }).toStrictEqual({
+                    code: 500,
+                    error: 'Internal Server Error',
+                    message: 'required mandatory parameters',
+                })
+            }
         })
     })
-})
-
-describe('When update an account using update method', () => {
-    const account = new Account()
-    describe('should work without throw an error', () => {
-        test('to call it correctly', async () => {
-            await account.update({ id: 1 }, { name: 'test' })
-            expect(mockUpdate).toHaveBeenCalled()
-            const _calls = mockUpdate.mock.calls[0][0]
-            expect(_calls.hasOwnProperty('where')).toBe(true)
-            expect(_calls.hasOwnProperty('data')).toBe(true)
+    describe('Using the update method', () => {
+        describe('to modify an account', () => {
+            test('should be called by payload defined by one account attribute at least', async () => {
+                await account.update({ id: 1 }, { name: 'test' })
+                expect(mockUpdate.mock.calls[0][0]).toEqual(
+                    expect.objectContaining({
+                        where: expect.objectContaining({
+                            id: expect.any(Number),
+                        }),
+                        data: expect.objectContaining({
+                            name: expect.any(String),
+                        }),
+                    })
+                )
+            })
+            describe('should throw a SERVER error if it not be send', () => {
+                test('id parameter', async () => {
+                    try {
+                        await account.update({}, { likedRaffleId: 1 })
+                    } catch ({ code, message, error }) {
+                        expect({ code, message, error }).toStrictEqual({
+                            code: 500,
+                            error: 'Internal Server Error',
+                            message: 'id parameter is mandatory',
+                        })
+                    }
+                })
+                test('payload parameter', async () => {
+                    try {
+                        await account.update({ id: 1 }, {})
+                    } catch ({ code, message, error }) {
+                        expect({ code, message, error }).toStrictEqual({
+                            code: 500,
+                            error: 'Internal Server Error',
+                            message: 'payload parameter is mandatory',
+                        })
+                    }
+                })
+            })
         })
-        test('to connect/disconnect an account with a liked raffle', async () => {
-            await account.connect({ id: 1 }, { likedRaffleId: 1 })
-            const _callConnect = mockUpdate.mock.calls[0][0]
-            expect(_callConnect.hasOwnProperty('data')).toBe(true)
-            expect(_callConnect?.data?.liked).toEqual(
+    })
+    describe('Using the either connect/disconnect methods to link/unlink an account with a raffle', () => {
+        test('should be called with query, payload and option request', async () => {
+            await account.connect({ id: 1 }, { sharedRaffleId: 1 })
+            expect(mockUpdate.mock.calls[0][0]).toEqual(
                 expect.objectContaining({
-                    connect: expect.objectContaining({
+                    where: expect.objectContaining({
                         id: expect.any(Number),
                     }),
-                })
-            )
-            expect(_callConnect.hasOwnProperty('include')).toBe(true)
-            expect(_callConnect?.include).toEqual(
-                expect.objectContaining({
-                    liked: expect.any(Boolean),
+                    data: expect.objectContaining({
+                        shared: expect.objectContaining({
+                            connect: expect.objectContaining({
+                                id: expect.any(Number),
+                            }),
+                        }),
+                    }),
+                    include: expect.objectContaining({
+                        shared: expect.any(Boolean),
+                    }),
                 })
             )
 
             await account.disconnect({ id: 1 }, { likedRaffleId: 1 })
-            const _callDisconnect = mockUpdate.mock.calls[1][0]
-            expect(_callConnect.hasOwnProperty('data')).toBe(true)
-            expect(_callDisconnect?.data?.liked).toEqual(
+            expect(mockUpdate.mock.calls[1][0]).toEqual(
                 expect.objectContaining({
-                    disconnect: expect.objectContaining({
+                    where: expect.objectContaining({
                         id: expect.any(Number),
+                    }),
+                    data: expect.objectContaining({
+                        liked: expect.objectContaining({
+                            disconnect: expect.objectContaining({
+                                id: expect.any(Number),
+                            }),
+                        }),
+                    }),
+                    include: expect.objectContaining({
+                        liked: expect.any(Boolean),
                     }),
                 })
             )
-            expect(_callDisconnect.hasOwnProperty('include')).toBe(true)
-            expect(_callDisconnect?.include).toEqual(
-                expect.objectContaining({
-                    liked: expect.any(Boolean),
-                })
-            )
         })
-        test('to connect an account with a shared raffle', async () => {
-            await account.connect({ id: 1 }, { sharedRaffleId: 1 })
-            const _calls = mockUpdate.mock.calls[0][0]
-            expect(_calls.hasOwnProperty('include')).toBe(true)
-            expect(_calls?.data?.shared).toEqual(
-                expect.objectContaining({
-                    connect: expect.objectContaining({
-                        id: expect.any(Number),
-                    }),
-                })
-            )
-            expect(_calls?.include).toEqual(
-                expect.objectContaining({
-                    shared: expect.any(Boolean),
-                })
-            )
-        })
-    })
-    describe('should throw a SERVER error', () => {
-        test('if it not be send id parameter', async () => {
-            try {
-                await account.update({}, { likedRaffleId: 1 })
-            } catch ({ code, message, error }) {
-                expect({ code, message, error }).toStrictEqual({
-                    code: 500,
-                    error: 'Internal Server Error',
-                    message: 'id parameter is mandatory',
-                })
-            }
-        })
-        test('if it not be send payload parameter', async () => {
-            try {
-                await account.update({ id: 1 }, {})
-            } catch ({ code, message, error }) {
-                expect({ code, message, error }).toStrictEqual({
-                    code: 500,
-                    error: 'Internal Server Error',
-                    message: 'payload parameter is mandatory',
-                })
-            }
-        })
-    })
-})
-
-describe('When create a relation between account using connect method', () => {
-    const account = new Account()
-    describe('should throw a SERVER error', () => {
-        test('if it not be send id parameter', async () => {
-            try {
-                await account.connect({}, { likedRaffleId: 1 })
-            } catch ({ code, message, error }) {
-                expect({ code, message, error }).toStrictEqual({
-                    code: 500,
-                    error: 'Internal Server Error',
-                    message: 'id parameter is mandatory',
-                })
-            }
-        })
-        test('if it not be send likedRaffleId or sharedRaffleId parameter', async () => {
-            try {
-                await account.connect({ id: 1 }, {})
-            } catch ({ code, message, error }) {
-                expect({ code, message, error }).toStrictEqual({
-                    code: 500,
-                    error: 'Internal Server Error',
-                    message: 'payload parameter is mandatory',
-                })
-            }
+        describe('should throw a SERVER error if it not be send', () => {
+            test('id parameter', async () => {
+                try {
+                    await account.connect({}, { likedRaffleId: 1 })
+                } catch ({ code, message, error }) {
+                    expect({ code, message, error }).toStrictEqual({
+                        code: 500,
+                        error: 'Internal Server Error',
+                        message: 'id parameter is mandatory',
+                    })
+                }
+            })
+            test('likedRaffleId or sharedRaffleId parameter', async () => {
+                try {
+                    await account.connect({ id: 1 }, {})
+                } catch ({ code, message, error }) {
+                    expect({ code, message, error }).toStrictEqual({
+                        code: 500,
+                        error: 'Internal Server Error',
+                        message: 'payload parameter is mandatory',
+                    })
+                }
+            })
         })
     })
 })

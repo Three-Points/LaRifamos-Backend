@@ -2,7 +2,7 @@ import supertest from 'supertest'
 import jwt from 'jsonwebtoken'
 import server from '@src/server'
 import Account from '@models/Account.model'
-import { mockAccount } from '../controllers/account/account.mock'
+import { mockAccount } from '../mocks/account.mock'
 
 beforeEach(() => {
     jest.resetModules()

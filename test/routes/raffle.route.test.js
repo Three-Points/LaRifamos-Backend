@@ -1,7 +1,7 @@
 import supertest from 'supertest'
 import server from '@src/server'
 import Account from '@models/Account.model'
-import { mockAccount } from '../controllers/account/account.mock'
+import { mockAccount } from '../mocks/account.mock'
 import jwt from 'jsonwebtoken'
 
 beforeEach(() => {

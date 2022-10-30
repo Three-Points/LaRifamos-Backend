@@ -1,7 +1,7 @@
 import supertest from 'supertest'
 import server from '@src/server'
 import Model from '@models/Raffle.model'
-import { mockRaffle } from '../controllers/raffle/raffle.mock'
+import { mockRaffle } from '../mocks/raffle.mock'
 
 beforeEach(() => {
     jest.resetModules()
