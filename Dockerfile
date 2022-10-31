@@ -11,5 +11,7 @@ COPY prisma ./prisma
 
 RUN pnpm install
 
+RUN pnpm exec prisma generate --data-proxy
+
 EXPOSE 80
 CMD [ "pnpm", "start" ]
