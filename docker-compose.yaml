@@ -13,3 +13,4 @@ services:
             - API_TOKEN
             - DB_URL
             - SERVER_URL
+            - PRISMA_GENERATE_DATAPROXY=true
